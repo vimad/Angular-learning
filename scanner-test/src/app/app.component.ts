@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnChanges, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnChanges, ChangeDetectorRef, SimpleChanges, OnInit, DoCheck, NgZone } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 require('scanner-js')
@@ -9,19 +9,23 @@ declare const scanner;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnChanges {
+export class AppComponent implements OnChanges, OnInit {
 
   @ViewChild("uiFix", { read: ElementRef })
   uiFix: ElementRef;
 
   imagesScanned = [];
 
-  constructor(private sanitizer: DomSanitizer, private changeRef:ChangeDetectorRef){}
+  constructor(private sanitizer: DomSanitizer, private changeRef:ChangeDetectorRef, private zone:NgZone){}
 
   ngOnChanges(changes: SimpleChanges): void {
 
     this.changeRef.markForCheck();
 
+  }
+
+  ngOnInit(){
+    
   }
 
   public getSafeSrc(dataURI: string) {
@@ -65,6 +69,7 @@ export class AppComponent implements OnChanges {
           this.imagesScanned.push(scannedImage);
       }
       console.log(this.imagesScanned);
+      this.changeRef.detectChanges();
       //this.triggerFalseClick();
   }
 
