@@ -1,0 +1,15 @@
+<button (click)="getData()">Get first athlete name</button>
+<input type="text" (keyup)="quickSearch()" [(ngModel)]="searchValue">
+<ag-grid-angular
+  style="width:860px; height:750px;"
+  class="ag-theme-balham"
+  [columnDefs]="columnDefs"
+  [enableSorting]="true"
+  [animateRows]="true"
+  [enableFilter]="true"
+  [pagination]="true"
+  [enableColResize]="true"
+  [sortingOrder]="sortingOrder"
+  [frameworkComponents]="frameworkComponents"
+  (gridReady)="onGridReady($event)"
+></ag-grid-angular>
